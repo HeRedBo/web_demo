@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>>开始使用layer</title>
+	<meta name="keywords" content="关键字列表" />
+	<meta name="description" content="网页描述" />
+	<link rel="stylesheet" type="text/css" href="layer/skin/layer.css" />
+	<style type="text/css">
+	.layer-area a {
+		padding: 0 20px;
+	    height: 30px;
+	    line-height: 30px;
+	    margin: 0 10px 10px 0;
+	    float: left;
+	    text-align: center;
+	    display: block;
+	    border: 1px solid #aaa;
+	    background: #F2F2F2;
+	    cursor: pointer;
+	}
+	a {
+	    color: #444;
+	    text-decoration: none;
+	}
+	#chutiyan{
+		width:1000px;
+		height:80px;
+		margin:100px auto;
+	}
+	</style>
+	<script type="text/javascript" src="jquery.min.js" ></script>
+	<script type="text/javascript" src="layer/layer.js" ></script>
+
+	<script type="text/javascript"></script>
+</head>
+<body>
+	<div class="clearfix layer-area" id="chutiyan">
+      <a href="javascript:;">初体验</a>
+      <a href="javascript:;">第三方扩展皮肤</a>
+      <a href="javascript:;">询问层</a>
+      <a href="javascript:;">提示层</a>
+      <a href="javascript:;">墨绿深蓝风</a>
+      <a href="javascript:;" style="_display:none;">捕获页</a>
+      <a href="javascript:;">页面层</a>
+      <a href="javascript:;">自定页</a>
+      <a href="javascript:;">tips层</a>
+      <a href="javascript:;">iframe层</a>
+      <a href="javascript:;">iframe窗</a>
+      <a href="javascript:;">加载层</a>
+      <a href="javascript:;">loading层</a>
+      <a href="javascript:;">小tips</a>
+      <a href="javascript:;">prompt层</a>
+      <a href="javascript:;">tab层</a>
+      <a href="javascript:;">相册层</a>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+$('#test1').on('click', function(){
+    layer.msg('Hello layer');
+});
+</script>
