@@ -1,0 +1,124 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layer-更懂你的web弹窗解决方案</title>
+
+  <style>
+  html,body{padding:0;}
+  html,body{_overflow-y:auto; font-family:'\5FAE\8F6F\96C5\9ED1';  font-size:14px;}
+  body{-webkit-font-feature-settings: 'kern' 1; -moz-font-feature-settings: 'kern' 1; -o-font-feature-settings: 'kern' 1; text-rendering: geometricPrecision;}
+body{ background:#fff;}
+a:hover{ text-decoration:none;}
+  .layer-area a {
+    padding: 0 20px;
+      height: 30px;
+      line-height: 30px;
+      margin: 0 10px 10px 0;
+      float: left;
+      text-align: center;
+      display: block;
+      border: 1px solid #aaa;
+      background: #F2F2F2;
+      cursor: pointer;
+  }
+  a {
+      color: #444;
+      text-decoration: none;
+  }
+  #chutiyan{
+    width:1000px;
+    height:80px;
+    margin:100px auto;
+  }
+  </style>
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="layer/layer.js"></script>
+</head>
+<body>
+
+<div class="clearfix layer-area" id="chutiyan">
+      <a href="javascript:;">初体验</a>
+      <a href="javascript:;">询问层</a>
+      <a href="javascript:;">提示层</a>
+      <a href="javascript:;">showloading</a>
+      <a href="javascript:;">hideloading</a>
+    </div>
+<script>
+var loadingControl = {
+  show : function() {
+    index = layer.load(0, {
+      shade: false
+    }); 
+  },
+    hide : function() {
+      layer.closeAll('loading'); 
+    }
+};
+
+// msg alert confirm 
+var layerControl = {
+
+  // icon : -1 无 0 : ! , 1 : √，2 : × 3: 4: ? 5 : 锁 6 : 哭脸 ,7 : 笑脸
+  alert : function(content, title, icon,callback) {
+    var content = content || null;
+    var title   = title || '提示信息';
+    var icon    = (-1<parseInt(icon)<8) ? icon : -1;
+    var callback= callback || null;
+    layer.alert(content,{
+        icon : icon,
+        title : title
+    },callback);
+  },
+
+  msg : function (msg,icon) {
+      var msg = msg || '';
+      var icon = (-1< parseInt(icon)< 8) ? icon : -1;
+      layer.msg(msg, {
+         offset: '80px',
+         shift: 0,
+         icon
+      });
+  },
+
+  confirm : function(msg,scallback,fcallback) {
+    var msg = msg || '';
+    var scallback = scallback || null;
+    var fcallback = fcallback || null;
+    layer.confirm('你是如何看待开发？', {
+        btn : ['确定','取消'] // 按钮、
+        },scallback,fcallback
+    );
+  }
+}
+
+$(document).ready(function() {
+    $('#chutiyan>a').bind('click',function(e){
+        var othis = $(this), index = othis.index();
+        switch(index)
+        {
+            case 0:
+              layerControl.alert('测试内容','',0);
+            break;
+            case 1:
+              layerControl.confirm('你是否要删除该数据',function(){
+                 layer.msg('数据删除成功', {icon: 1});
+              })
+            break;
+            case 2:
+              layerControl.msg('消息提示框',2);
+            break;
+            case 3:
+              loadingControl.show();
+            break;
+            case 4:
+              loadingControl.hide();
+            break;
+        }
+    })
+});
+</script>
+</body>
+</html>

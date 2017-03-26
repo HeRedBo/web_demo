@@ -1,0 +1,77 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layer-更懂你的web弹窗解决方案</title>
+
+  <style>
+  html,body{padding:0;}
+  html,body{_overflow-y:auto; font-family:'\5FAE\8F6F\96C5\9ED1';  font-size:14px;}
+  body{-webkit-font-feature-settings: 'kern' 1; -moz-font-feature-settings: 'kern' 1; -o-font-feature-settings: 'kern' 1; text-rendering: geometricPrecision;}
+body{ background:#fff;}
+a:hover{ text-decoration:none;}
+  .layer-area a {
+    padding: 0 20px;
+      height: 30px;
+      line-height: 30px;
+      margin: 0 10px 10px 0;
+      float: left;
+      text-align: center;
+      display: block;
+      border: 1px solid #aaa;
+      background: #F2F2F2;
+      cursor: pointer;
+  }
+  a {
+      color: #444;
+      text-decoration: none;
+  }
+  #chutiyan{
+    width:1000px;
+    height:80px;
+    margin:100px auto;
+  }
+  </style>
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="layer/layer.js"></script>
+  <script src="js/demo.js"></script>
+</head>
+<body>
+
+<div class="clearfix layer-area" id="chutiyan">
+      <a href="javascript:;">初体验</a>
+      <a href="javascript:;">询问层</a>
+      <a href="javascript:;">提示层</a>
+      <a href="javascript:;">墨绿深蓝风</a>
+      <a href="javascript:;">页面层</a>
+       <a href="javascript:;">自定义</a>
+      <a href="javascript:;">tips层</a>
+      <a href="javascript:;">iframe层</a>
+      <a href="javascript:;">加载层</a>
+      <a href="javascript:;">loading层</a>
+      <a href="javascript:;">小tips</a>
+      <a href="javascript:;">prompt层</a>
+      <a href="javascript:;">tab层</a>
+      <a href="javascript:;">相册层</a>
+    </div>
+<script>
+
+;!function(){
+
+
+//页面一打开就执行，放入ready是为了layer所需配件（css、扩展模块）加载完毕
+layer.ready(function(){ 
+    
+});
+
+//关于
+$('#about').on('click', function(){
+  layer.alert(layer.v + ' - 贤心出品 sentsin.com');
+});
+
+}();
+</script>
+</body>
+</html>
