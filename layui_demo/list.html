@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>新网页标题</title>
+	<meta name="keywords" content="关键字列表" />
+	<meta name="description" content="网页描述" />
+	<link rel="stylesheet" type="text/css" href="" />
+
+	 <link rel="stylesheet" type="text/css" href="src/css/common.css" />
+	<style type="text/css">
+		 .per{ padding: 20px; border-bottom: 1px dotted #d3d3d3;}
+         .content{
+            font-size: 16px;
+            line-height: 25px;
+            color:#2f2f2f;
+            word-wrap:break-word; 
+            word-break:break-all; 
+        }
+         .nodata{display:block; height:32px; line-height:32px; text-align:center; color:#999; font-size:14px}
+	</style>
+	<script type="text/javascript"></script>
+</head>
+<body>
+	<div class="container">
+            <div class="demo">
+                <div id="lists">
+                	
+                </div> 
+                <div class="nodata"></div>
+            </div>  
+        </div>
+</body>
+</html>
+<script src="src/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    function isEmpty(value) 
+    {
+        return (Array.isArray(value) && value.length === 0) || (Object.prototype.isPrototypeOf(value) && Object.keys(value).length === 0);
+    }
+    var logListItem = {
+        _data : {
+            page : 1// 当前页 
+        },
+        _url : 'ajaxData.php',
+        _isDealing : 0,
+        init : function ()
+        {
+            var that = this;
+            var winH = $(window).height(); //页面可视区域高度 
+            $(window).scroll(function() 
+            {
+                // 当滚动的页数小于总页数的时候，继续加载
+                var pageH = $(document.body).height();
+                var scrollT = $(window).scrollTop(); //滚动条top 
+                var aa = (pageH - winH - scrollT) / winH;
+                if (aa < 0.01) 
+                {
+                   if(that._isDealing) return;
+                   that._isDealing =1;
+                   that.submit();
+                }
+            });
+            that.submit();
+        },
+
+        setData : function(key,value)
+        {
+            this._data[key] = value;
+            return this;
+        },
+        getData : function ()
+        {
+            return this._data;
+        },
+        submit : function(url) {
+            var that = this;
+            url = url || that._url;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data : that.getData(),
+                dataType: 'json',
+                beforeSend: function () {
+                    //ajax请求之前
+                    that.showLoading();
+                },
+
+                complete: function (XMLHttpRequest, textStatus) {
+                    //ajax请求完成，不管成功失败
+                    that.hideLoding();
+                },
+
+                success : function(data) 
+                {
+                    var result = data.data;
+                    if(isEmpty(result))
+                    {
+                        that.showEmpty()
+                        
+                    } 
+                    else
+                    {
+                        var str = '';
+                        $.each(result,function(index, array) {
+                            var str = "<div class='per'>";
+                            var str = str +  "<div class='content'>" + array['id'] + "、" + array['content'] + "</div></div>";
+                            $("#lists").append(str);
+                        });
+                        that._isDealing = 0;
+                    }
+                },
+
+                error : function(XMLHttpRequest, textStatus, errorThrown)
+                {
+                    $(".nodata").show().html("服务器错误 请稍后重试~");
+                    that._isDealing = 0;
+                },
+            });
+            that._data.page ++;
+        },
+
+        showEmpty : function ()
+        {
+            $(".nodata").show().html("别滚动了，已经到底了。。。");
+        },
+
+        showLoading : function () 
+        {
+            $(".nodata").show().html("<img src='images/load.gif'/>");
+        },
+
+        hideLoding : function () {
+            $(".nodata").show().html("别滚动了，已经到底了。。。");
+        }
+    }
+
+jQuery(document).ready(function($) {
+    logListItem.init();
+    //logListItem.submit();
+});
+</script>

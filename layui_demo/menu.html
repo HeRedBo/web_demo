@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="src/css/layui.css"  media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+            
+<div style="display: inline-block; width:90%; height: 100%; padding: 10px; overflow: auto;">
+  <ul id="demo1"></ul>
+</div>      
+<script src="src/layui.js" charset="utf-8"></script>
+<script src="src/jquery.min.js" charset="utf-8"></script>
+<script>
+
+var LogItem = {
+    dirs : [],
+    init : function () {
+        var that = this;
+        that.getlogData()
+    },
+
+    getlogData : function () {
+        var that = this;
+        $.ajax({
+            url: 'http://localhost:8890/menu_data.php',
+            type: 'GET',
+            dataType: 'json',
+            beforeSend: function () {
+                //ajax请求之前
+            },
+
+            complete: function (XMLHttpRequest, textStatus) {
+                //ajax请求完成，不管成功失败
+            },
+
+            success : function(data) {
+                that.dirs =  data;
+                that.initMenu();
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown)
+            {
+
+            },
+        });
+    },
+
+    initMenu : function ()
+    {
+        var that = this;
+        layui.use(['tree', 'layer'], function() 
+        {
+            var layer = layui.layer ,$ = layui.jquery; 
+            layui.tree({
+                elem : '#demo1',  //指定元素
+                target : '_blank', //是否新选项卡打开（比如节点返回href才有效）
+                click : function(item) { //点击节点回调
+                    layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
+                    console.log(item);
+                }
+                ,nodes : that.dirs,
+            });
+  
+  
+        });  
+
+    }
+};
+
+jQuery(document).ready(function($) 
+{
+    LogItem.init();
+});
+</script>
+
+</body>
+</html>
