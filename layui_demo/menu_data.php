@@ -1,8 +1,9 @@
 <?php
 
+
 function myScandir($dir)
 {
-    
+
     $files = array();
     static $id;
     if(is_dir($dir)){
@@ -12,24 +13,25 @@ function myScandir($dir)
             //遍历并判断
             while ($file = readdir( $tmp ))
             {
-                
+
                 if($file != '.' && $file != "..")
                 {
                     $id ++;
                     if(is_dir( $dir . "/" . $file))
                     {
                         $files[] = [
-                            'id'    => $id,
-                            'name'  => $file,
-                            'children' => myScandir($dir."/".$file)
+                            'id'        => $id,
+                            'name'      => $file,
+                            'children'  => myScandir($dir."/".$file)
                         ];
-                        
+
                     }
                     else
                     {
                         $files[]= [
-                            'id' => $id,
-                            'name' => $file,
+                            'id'    => $id,
+                            'name'  => $file,
+                            'path'   => str_replace('D:\home\logs', '', $dir.'/'.$file),
                         ];
                     }
                 }
@@ -40,7 +42,7 @@ function myScandir($dir)
         }
     }
 }
-	
-$dir = 'D:\jinxishop';
+
+$dir = 'D:\home\logs';
 $dirs = myScandir($dir);
 echo json_encode($dirs);

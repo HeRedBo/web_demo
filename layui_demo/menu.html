@@ -10,10 +10,10 @@
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
-            
+
 <div style="display: inline-block; width:90%; height: 100%; padding: 10px; overflow: auto;">
   <ul id="demo1"></ul>
-</div>      
+</div>
 <script src="src/layui.js" charset="utf-8"></script>
 <script src="src/jquery.min.js" charset="utf-8"></script>
 <script>
@@ -34,7 +34,6 @@ var LogItem = {
             beforeSend: function () {
                 //ajax请求之前
             },
-
             complete: function (XMLHttpRequest, textStatus) {
                 //ajax请求完成，不管成功失败
             },
@@ -53,26 +52,29 @@ var LogItem = {
     initMenu : function ()
     {
         var that = this;
-        layui.use(['tree', 'layer'], function() 
+        layui.use(['tree', 'layer'], function()
         {
-            var layer = layui.layer ,$ = layui.jquery; 
+            var layer = layui.layer ,$ = layui.jquery;
             layui.tree({
                 elem : '#demo1',  //指定元素
-                target : '_blank', //是否新选项卡打开（比如节点返回href才有效）
+                target : '_blank', //是否新选项卡打开（比如节点返回href才有效）t
+                nodes : that.dirs,
                 click : function(item) { //点击节点回调
-                    layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
+                    if(item.path)
+                    {
+                        window.parent.mainFrame.location.href = '/list.html?path=' +item.path;
+                    }
                     console.log(item);
                 }
-                ,nodes : that.dirs,
             });
-  
-  
-        });  
+
+
+        });
 
     }
 };
 
-jQuery(document).ready(function($) 
+jQuery(document).ready(function($)
 {
     LogItem.init();
 });

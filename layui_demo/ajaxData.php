@@ -56,7 +56,7 @@ class ajaxData
 	/**
 	 * 获取文件的查询限制条件
 	 * @param  integer $page     页码
-	 * @param  integer $pageSize  
+	 * @param  integer $pageSize
 	 * @return [type]            [description]
 	 */
 	protected function getSearchLimit($page, $pageSize)
@@ -72,9 +72,9 @@ class ajaxData
 	 * @param  integer $startLine 开始行数
 	 * @param  integer $endLine   结束行数
 	 * @param  string  $method    文件读取模式
-	 * @return array 
+	 * @return array
 	 */
-	public function getFileLines($filename, $startLine = 1, $endLine=50, $method='rb') 
+	public function getFileLines($filename, $startLine = 1, $endLine=50, $method='rb')
 	{
 	    $content = array();
 	    $count   = $endLine - $startLine;
@@ -83,15 +83,16 @@ class ajaxData
 	    {
 	        $fp = new SplFileObject($filename, $method);
 	        $fp->seek($startLine-1);/* 转到第N行, seek方法参数从0开始计数 */
-	        for($i = 0; $i <= $count; ++$i) 
+	        for($i = 0; $i <= $count; ++$i)
 	        {
 	        	//var_dump($fp->current());
 	        	$data = $fp->current();
+	        	if(!$data)
+	        		break;
 	        	$content[] = [
 	        		'id' => $id,
 	        		'content' => $fp->current() /* current()获取当前行内容 */
 	        	];
-	         	
 	            $fp->next(); /* 下一行 */
 	            $id ++;
 	        }
@@ -101,7 +102,7 @@ class ajaxData
 	   		/*PHP<5.1 */
 	        $fp = fopen($filename, $method);
 	        if(!$fp) return 'error:can not read file';
-	        for ($i=1;$i<$startLine;++$i) 
+	        for ($i=1;$i<$startLine;++$i)
 	        {
 	        	/* 跳过前$startLine行 */
 	            fgets($fp);
@@ -150,10 +151,11 @@ class ajaxData
 		return false;
 	}
 }
+$logDir  = 'D:\home\logs';
+$path = isset($_GET['path']) ? $_GET['path'] : '' ;
+$filepath = $logDir .$path;
 
-$filepath = 'D:\home\logs\Api\2017-03-18\ApiRequest.log';
 $ajaxdata = new ajaxData($filepath);
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $data = $ajaxdata->getFileContents('',$page);
 echo json_encode($data);
-

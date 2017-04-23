@@ -1,19 +1,39 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<title>网页标题</title>
+	<title>新网页标题</title>
 	<meta name="keywords" content="关键字列表" />
 	<meta name="description" content="网页描述" />
 	<link rel="stylesheet" type="text/css" href="" />
+	<style type="text/css"></style>
 	<style type="text/css">
 		*{margin:0;padding:0;}
 		h1{position:absolute;left:260px;top:30px;color:orange;}
+		body {
+			/*background-image: url(./images/banner.jpg);*/
+			/*background-repeat:repeat-x;*/
+  			/*background-color: #000000;*/
+  			 background:url(images/banner.jpg) top center no-repeat; background-size:cover;
+		}
+
+		#submenu-div a.fix-submenu{clear:both; margin-left:5px; padding:1px 5px; *padding:3px 5px 5px; background:#DDEEF2; color:#278296;}
+		#submenu-div a.fix-submenu:hover{padding:1px 5px; *padding:3px 5px 5px; background:#FFF; color:#278296;}
+		#menu-div li.fix-spacel{width:30px; border-left:none;}
+		#menu-div li.fix-spacer{border-right:none;}
+
 	</style>
 	<script type="text/javascript"></script>
 </head>
 <body>
-	<img src="images/banner.jpg" width="100%" height="90"/>
-<h1>燕善房后台日志查看</h1>
+	<!-- <img src="images/banner.jpg" width="100%" height="90"/> -->
+	<div id="submenu-div">
+    	<div style="padding: 65px 65px 0 0; clear:right;text-align: right; color: #eef0db;width:40%;float: right;" id="send_info">
+      	<a class="fix-submenu" target="main-frame" href="index.php?act=clear_cache">清除缓存</a>
+      	<a class="fix-submenu" target="_top" href="">退出</a>
+    </div>
+        <div style="padding: 5px 10px 0pt 0pt; text-align: right; color: rgb(255, 153, 0); display: none; width: 40%; float: right;" id="load-div"><img width="16" height="16" style="vertical-align: middle" alt="正在处理您的请求..." src="images/top_loader.gif"> 正在处理您的请求...</div>
+  </div>
+	<h1>燕善房后台日志查看</h1>
 </body>
 </html>

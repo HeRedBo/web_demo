@@ -9,11 +9,11 @@
 
 	 <link rel="stylesheet" type="text/css" href="src/css/common.css" />
 	<style type="text/css">
-		 .per{ padding: 20px; border-bottom: 1px dotted #d3d3d3;}
+		/* //.per{ padding: 5px;}*/
          .content{
             font-size: 16px;
             line-height: 25px;
-            color:#2f2f2f;
+            color:#333;
             word-wrap:break-word; 
             word-break:break-all; 
         }
@@ -27,7 +27,7 @@
                 <div id="lists">
                 	
                 </div> 
-                <div class="nodata"></div>
+                <div class="nodata"><img src='images/load.gif'/></div>
             </div>  
         </div>
 </body>
@@ -38,15 +38,33 @@
     {
         return (Array.isArray(value) && value.length === 0) || (Object.prototype.isPrototypeOf(value) && Object.keys(value).length === 0);
     }
+    function request(paras)
+    {   
+        var url = location.href;   
+        var paraString = url.substring(url.indexOf("?")+1,url.length).split("&");   
+        var paraObj = {}   
+        for (i=0; j=paraString[i]; i++){   
+            paraObj[j.substring(0,j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=")+1,j.length);   
+        }   
+        var returnValue = paraObj[paras.toLowerCase()];   
+        if(typeof(returnValue)=="undefined"){   
+            return "";   
+        }else{   
+            return returnValue;   
+        }   
+    }  
     var logListItem = {
         _data : {
-            page : 1// 当前页 
+            page : 1,// 当前页
+            path : '',
         },
         _url : 'ajaxData.php',
         _isDealing : 0,
         init : function ()
         {
             var that = this;
+            var filepath = request('path');
+            that.setData('path',filepath);
             var winH = $(window).height(); //页面可视区域高度 
             $(window).scroll(function() 
             {
@@ -61,6 +79,11 @@
                    that.submit();
                 }
             });
+            if(that._data.path == '')
+            {
+                that.showEmpty();
+                return;
+            }
             that.submit();
         },
 
@@ -104,7 +127,7 @@
                         var str = '';
                         $.each(result,function(index, array) {
                             var str = "<div class='per'>";
-                            var str = str +  "<div class='content'>" + array['id'] + "、" + array['content'] + "</div></div>";
+                            var str = str +  "<div class='content'>【" + array['id'] + "】" + array['content'] + "</div></div>";
                             $("#lists").append(str);
                         });
                         that._isDealing = 0;
